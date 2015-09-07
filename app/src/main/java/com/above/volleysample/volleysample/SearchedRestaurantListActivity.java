@@ -23,11 +23,8 @@ public class SearchedRestaurantListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searched_restaurant_list);
-
-
             list.add(new Restaurant("Park Inn", "Bangalore"));
             list.add(new Restaurant("Sayaji", "Indore"));
-
 
         restaurentAdapter= new RestaurentAdapter(SearchedRestaurantListActivity.this,R.layout.item_list,list);
             ListView listView = (ListView) findViewById(R.id.custemListView);
