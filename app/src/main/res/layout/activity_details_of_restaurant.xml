@@ -1,0 +1,30 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewName"
+        android:layout_margin="10sp"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:text="Heading" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewLocation"
+        android:layout_margin="10sp"
+        android:textSize="30sp"
+        android:text="Location" />
+
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:textSize="20sp"
+        android:text="all details of Restaurat will appear here..."/>
+</LinearLayout>
