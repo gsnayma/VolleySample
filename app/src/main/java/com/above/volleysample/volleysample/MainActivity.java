@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity  {
 
     private Spinner spinner;
-    private String[] listOfLocations = {"Amsterdam","Barcelona","Berlin","Dubay","London","Paris","Rome","Tuscany"};
+    private String[] listOfLocations = {"Select Location","Amsterdam","Barcelona","Berlin","Dubay","London","Paris","Rome","Tuscany"};
 
 
     @Override
