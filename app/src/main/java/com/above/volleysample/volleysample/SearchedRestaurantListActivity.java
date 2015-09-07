@@ -37,7 +37,6 @@ public class SearchedRestaurantListActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Restaurant rest = list.get(position);
-                    // Log.e("NAME OF RESTAURANT : ", rest.toString());
                     Intent intent = new Intent(SearchedRestaurantListActivity.this,DetailsOfRestaurantActivity.class);
 
                     intent.putExtra("RESTAURANT",rest);
