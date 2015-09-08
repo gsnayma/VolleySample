@@ -1,10 +1,11 @@
 package com.above.volleysample.volleysample;
 
+import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
 
-public class Restaurant implements Serializable{
+public class Restaurant implements Parcelable{
 
     public String nameOfRestaurant;
     public String locationOfRestaurant;
@@ -34,5 +35,18 @@ public class Restaurant implements Serializable{
     @Override
     public String toString() {
         return String.format(nameOfRestaurant  +"\n"+ locationOfRestaurant);
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeString(nameOfRestaurant);
+        dest.writeString(locationOfRestaurant);
     }
 }
