@@ -28,6 +28,11 @@ public class SearchedRestaurantListActivity extends AppCompatActivity {
             list.add(new Restaurant("Park Inn", "Bangalore"));
             list.add(new Restaurant("Sayaji", "Indore"));
 
+        // get data from intent
+        Intent intent = getIntent();
+        intent.getParcelableArrayListExtra("rest_list");
+
+
 
         restaurentAdapter= new RestaurentAdapter(SearchedRestaurantListActivity.this,R.layout.item_list,list);
             ListView listView = (ListView) findViewById(R.id.custemListView);
