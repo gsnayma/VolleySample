@@ -19,6 +19,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SearchedRestaurantListActivity"
+            android:label="@string/title_activity_searched_restaurant_list" >
+        </activity>
+        <activity
+            android:name=".DetailsOfRestaurantActivity"
+            android:label="@string/title_activity_details_of_restaurant" >
+        </activity>
     </application>
 
 </manifest>
