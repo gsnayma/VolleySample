@@ -50,6 +50,7 @@ public class Restaurant implements Parcelable{
 
 
 
+
     @Override
     public int describeContents() {
         return 0;

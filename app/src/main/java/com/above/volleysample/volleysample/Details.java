@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 public class Details implements Serializable {
 
+
     private String name;
     private String address;
     private String location;
