@@ -10,21 +10,107 @@
         android:layout_margin="10sp"
         android:textStyle="bold"
         android:textSize="30sp"
-        android:text="Heading" />
+        android:text="Heading"
+        android:gravity="center"/>
 
-    <TextView
+
+    <ImageView
+        android:layout_margin="20sp"
+        android:layout_gravity="center"
+        android:layout_width="150sp"
+        android:layout_height="150sp"
+        android:src="@drawable/restaurant_image"/>
+
+    <LinearLayout
+        android:layout_margin="10sp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewLocation"
-        android:layout_margin="10sp"
-        android:textSize="30sp"
-        android:text="Location" />
-
-
+        android:orientation="horizontal">
     <TextView
+        android:layout_weight="0.6"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10sp"
+        android:layout_marginLeft="10sp"
         android:textSize="20sp"
-        android:text="all details of Restaurat will appear here..."/>
+        android:text="Address :" />
+
+    <TextView
+        android:layout_weight="0.4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewAddress"
+        android:textSize="20sp"
+        android:text="add will appear" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="10sp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_weight="0.6"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:textSize="20sp"
+            android:text="Location :" />
+
+        <TextView
+            android:layout_weight="0.4"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewLocation"
+            android:textSize="20sp"
+            android:text="Location will appear" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="10sp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_weight="0.6"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:textSize="20sp"
+            android:text="Phone :" />
+
+        <TextView
+            android:layout_weight="0.4"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewPhone"
+            android:textSize="20sp"
+            android:text="Phone number" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="10sp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_weight="0.6"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:textSize="20sp"
+            android:text="Website :" />
+
+        <TextView
+            android:layout_weight="0.4"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewWebsite"
+            android:textSize="20sp"
+            android:text="website here" />
+
+    </LinearLayout>
+
 </LinearLayout>
