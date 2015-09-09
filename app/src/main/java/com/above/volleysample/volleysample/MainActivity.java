@@ -163,6 +163,7 @@ public class MainActivity extends AppCompatActivity  {
             Intent intent = new Intent(MainActivity.this,SearchedRestaurantListActivity.class);
             intent.putParcelableArrayListExtra("rest_list", listRestaurants);
             startActivity(intent);
+            listRestaurants.clear();
 
         }
 

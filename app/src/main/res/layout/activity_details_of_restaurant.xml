@@ -32,7 +32,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10sp"
         android:textSize="20sp"
-        android:text="Address :" />
+        android:text="Address :"
+        />
 
     <TextView
         android:layout_weight="0.4"

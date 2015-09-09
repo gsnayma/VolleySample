@@ -31,19 +31,16 @@ public class SearchedRestaurantListActivity extends AppCompatActivity {
     RestaurentAdapter restaurentAdapter;
     private ArrayList<Parcelable> list = new ArrayList<>();
     String detailsUrl;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
+        Log.e("oncreate", "oncrea");
         setContentView(R.layout.activity_searched_restaurant_list);
-
-
-          // list.add(new Restaurant("Park Inn", "Bangalore"));
-          //  list.add(new Restaurant("Sayaji", "Indore"));
-
-        list.clear();
-
-
         // get data from intent
         Intent intent = getIntent();
         list =  intent.getParcelableArrayListExtra("rest_list");
@@ -53,34 +50,60 @@ public class SearchedRestaurantListActivity extends AppCompatActivity {
 
         restaurentAdapter = new RestaurentAdapter(SearchedRestaurantListActivity.this, R.layout.item_list, list);
 
-        ListView listView = (ListView) findViewById(R.id.custemListView);
+        listView = (ListView) findViewById(R.id.custemListView);
         listView.setAdapter(restaurentAdapter);
-
+       // restaurentAdapter.notifyDataSetChanged();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Restaurant rest = (Restaurant) list.get(position);
-                    // Log.e("NAME OF RESTAURANT : ", rest.toString());
-                    detailsUrl=rest.getDetailsUrl();
+                Restaurant rest = (Restaurant) list.get(position);
+                // Log.e("NAME OF RESTAURANT : ", rest.toString());
+                detailsUrl = rest.getDetailsUrl();
 
-                    GetDetailsTask task=new GetDetailsTask();
-                    task.execute(detailsUrl);
+                GetDetailsTask task = new GetDetailsTask();
+                task.execute(detailsUrl);
 
 
-                }
-            });
-        }
+            }
+        });
+        //list.clear();
+restaurentAdapter.notifyDataSetChanged();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+restaurentAdapter.notifyDataSetChanged();
+
+        
+
+
+        // list.add(new Restaurant("Park Inn", "Bangalore"));
+        //  list.add(new Restaurant("Sayaji", "Indore"));
+
+        
+
+
+
+    }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        list.clear();
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        list.clear();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+     //   list.clear();
     }
 
     class GetDetailsTask extends AsyncTask<String,Void,String>
@@ -193,5 +216,6 @@ public class SearchedRestaurantListActivity extends AppCompatActivity {
 
             return  view;
         }
+
     }
 
