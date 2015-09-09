@@ -112,7 +112,8 @@ public class SearchedRestaurantListActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            return sb.toString();
+            Log.e("Details json---> ", sb.toString());
+            return sb+"";
         }
 
         @Override
@@ -120,16 +121,23 @@ public class SearchedRestaurantListActivity extends AppCompatActivity {
             super.onPostExecute(s);
 
             // parse JSON
+            try {
+                JSONObject jsonObject= new JSONObject(s);
+                String name = jsonObject.getString("name") ;
+                String location= jsonObject.getString("location") ;
+                String address= jsonObject.getString("address") ;
+                String phone_number= jsonObject.getString("phone_number") ;
+                String website= jsonObject.getString("website") ;
 
-            String name = "";
-            String location="";
 
+                Intent intent = new Intent(SearchedRestaurantListActivity.this,DetailsOfRestaurantActivity.class);
+                intent.putExtra(new Details(name,address,location,phone_number,website), "details");
+                startActivity(intent);
 
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-            Intent intent = new Intent(SearchedRestaurantListActivity.this,DetailsOfRestaurantActivity.class);
-            intent.putExtra("name",name);
-            intent.putExtra("location",location);
-            startActivity(intent);
         }
     }
 
