@@ -27,5 +27,4 @@ public class DetailsOfRestaurantActivity extends AppCompatActivity {
         textViewDetailsLocation.setText(restaurant.getLocationOfRestaurant());
     }
 
-
 }
