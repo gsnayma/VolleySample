@@ -18,22 +18,6 @@ public class Restaurant implements Parcelable{
         this.detailsUrl=detailsUrl;
     }
 
-    protected Restaurant(Parcel in) {
-        nameOfRestaurant = in.readString();
-        locationOfRestaurant = in.readString();
-    }
-
-    public static final Creator<Restaurant> CREATOR = new Creator<Restaurant>() {
-        @Override
-        public Restaurant createFromParcel(Parcel in) {
-            return new Restaurant(in);
-        }
-
-        @Override
-        public Restaurant[] newArray(int size) {
-            return new Restaurant[size];
-        }
-    };
 
     public void setLocationOfRestaurant(String locationOfRestaurant) {
         this.locationOfRestaurant = locationOfRestaurant;

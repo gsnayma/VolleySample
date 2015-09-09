@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity  {
     String location="";
     ArrayList<Restaurant> listRestaurants= new ArrayList<>();
    // String jsonData;
-    String details;
 
 
     RequestQueue requestQueue;
@@ -80,7 +79,7 @@ public class MainActivity extends AppCompatActivity  {
 
         Intent intent = new Intent(MainActivity.this,SearchedRestaurantListActivity.class);
        // intent.putParcelableArrayListExtra("rest_list", (ArrayList<? extends Parcelable>) listRestaurants);
-        intent.putExtra("details",details);
+       // intent.putExtra("details",details);
         startActivity(intent);
 
     }
@@ -115,8 +114,9 @@ public class MainActivity extends AppCompatActivity  {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                             String name=jsonObject1.getString("name");
                             String location1=jsonObject1.getString("location");
+                            String details=jsonObject1.getString("details");
                             if(location1==location) {
-                                Restaurant r = new Restaurant(name, location);
+                                Restaurant r = new Restaurant(name, location,details);
                                 listRestaurants.add(r);
 
                                 Log.e("Restaurant Object----> ", r.toString());
@@ -136,23 +136,15 @@ public class MainActivity extends AppCompatActivity  {
             });
 
 
-            int socketTimeout = 70000;
-            RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-            request.setRetryPolicy(policy);
             requestQueue.add(request);
 
             return "done";
         }
 
-       /* @Override
+        @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
-            for (int i=0; i<listRestaurants.size();i++)
-            {
-                 listRestaurants.get(i);
-            }
-        }*/
+        }
     }
 
 
