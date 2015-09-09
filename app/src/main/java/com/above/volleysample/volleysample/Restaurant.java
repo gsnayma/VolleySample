@@ -11,6 +11,7 @@ public class Restaurant implements Parcelable{
     private String locationOfRestaurant;
     private String detailsUrl;
 
+    
     Restaurant(String nameOfRestaurant,String locationOfRestaurant,String detailsUrl)
     {
         this.nameOfRestaurant = nameOfRestaurant;
