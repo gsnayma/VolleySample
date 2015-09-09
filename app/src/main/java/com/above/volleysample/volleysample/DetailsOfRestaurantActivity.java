@@ -19,7 +19,6 @@ public class DetailsOfRestaurantActivity extends AppCompatActivity {
         textViewDetailsName = (TextView) findViewById(R.id.textViewName);
         textViewDetailsLocation = (TextView) findViewById(R.id.textViewLocation);
 
-
         Intent intent= getIntent();
         textViewDetailsLocation.setText(intent.getStringExtra("location"));
         textViewDetailsName.setText(intent.getStringExtra("name"));
@@ -27,5 +26,4 @@ public class DetailsOfRestaurantActivity extends AppCompatActivity {
         //textViewDetailsName.setText(restaurant.getNameOfRestaurant());
         //textViewDetailsLocation.setText(restaurant.getLocationOfRestaurant());
     }
-
 }
