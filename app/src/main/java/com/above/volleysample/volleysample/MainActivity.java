@@ -151,8 +151,9 @@ public class MainActivity extends AppCompatActivity  {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     String name= jsonObject.getString("name");
                     details= jsonObject.getString("details");
-                    listRestaurants.add(new Restaurant(name,location,details));
-                    Log.e("Name and Location: ", name+"      "+location+"    "+details);
+                    Restaurant r= new Restaurant(name,location,details);
+                    listRestaurants.add(r);
+                    Log.e("Name and Location: ", r.toString());
                 }
 
             } catch (JSONException e) {

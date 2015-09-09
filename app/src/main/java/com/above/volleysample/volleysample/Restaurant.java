@@ -45,7 +45,7 @@ public class Restaurant implements Parcelable{
 
     @Override
     public String toString() {
-        return String.format(nameOfRestaurant  +"\n"+ locationOfRestaurant);
+        return String.format(nameOfRestaurant  +"\n"+ locationOfRestaurant+"\n"+ detailsUrl);
     }
 
 
@@ -60,6 +60,7 @@ public class Restaurant implements Parcelable{
 
         dest.writeString(nameOfRestaurant);
         dest.writeString(locationOfRestaurant);
+        dest.writeString(detailsUrl);
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
@@ -75,5 +76,6 @@ public class Restaurant implements Parcelable{
     {
         nameOfRestaurant= in.readString();
         locationOfRestaurant= in.readString();
+        detailsUrl = in.readString();
     }
 }

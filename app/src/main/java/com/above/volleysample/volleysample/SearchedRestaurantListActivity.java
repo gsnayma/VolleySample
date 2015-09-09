@@ -89,7 +89,7 @@ public class SearchedRestaurantListActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
 
-            StringBuffer sb = null;
+            StringBuilder sb = new StringBuilder();
 
             try {
                 URL url= new URL(params[0]);
@@ -131,7 +131,8 @@ public class SearchedRestaurantListActivity extends AppCompatActivity {
 
 
                 Intent intent = new Intent(SearchedRestaurantListActivity.this,DetailsOfRestaurantActivity.class);
-                intent.putExtra(new Details(name,address,location,phone_number,website), "details");
+
+                intent.putExtra("details",new Details(name,address,location,phone_number,website));
                 startActivity(intent);
 
             } catch (JSONException e) {

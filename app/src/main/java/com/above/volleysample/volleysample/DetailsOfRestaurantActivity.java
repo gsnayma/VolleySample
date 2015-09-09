@@ -21,12 +21,11 @@ public class DetailsOfRestaurantActivity extends AppCompatActivity {
 
 
         Intent intent= getIntent();
-        Details d = intent.getSerializableExtra("details");
-        textViewDetailsLocation.setText(intent.getStringExtra("location"));
-        textViewDetailsName.setText(intent.getStringExtra("name"));
-        //Restaurant restaurant = (Restaurant)intent.getSerializableExtra("RESTAURANT");
-        //textViewDetailsName.setText(restaurant.getNameOfRestaurant());
-        //textViewDetailsLocation.setText(restaurant.getLocationOfRestaurant());
+        Details d = (Details) intent.getSerializableExtra("details");
+        textViewDetailsLocation.setText(d.getLocation());
+        textViewDetailsName.setText(d.getName());
+
+
     }
 
 }
