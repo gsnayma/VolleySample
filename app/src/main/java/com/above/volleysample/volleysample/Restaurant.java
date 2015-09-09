@@ -18,6 +18,7 @@ public class Restaurant implements Parcelable{
         this.detailsUrl=detailsUrl;
     }
 
+
     public void setLocationOfRestaurant(String locationOfRestaurant) {
         this.locationOfRestaurant = locationOfRestaurant;
     }
