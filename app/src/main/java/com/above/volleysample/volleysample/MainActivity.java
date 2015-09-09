@@ -1,6 +1,5 @@
 package com.above.volleysample.volleysample;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Parcelable;
@@ -29,18 +28,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity  {
 
-    String strURL="http://tour-pedia.org/api/getPlaces?category=restaurant";
     private Spinner spinner;
     private String[] listOfLocations = {"Amsterdam","Barcelona","Berlin","Dubay","London","Paris","Rome","Tuscany"};
     String location="";
@@ -50,7 +42,6 @@ public class MainActivity extends AppCompatActivity  {
 
 
     RequestQueue requestQueue;
-    private String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,54 +73,6 @@ public class MainActivity extends AppCompatActivity  {
 
     public void searchRestaurants(View v)
     {
-
-
-        DemoTask dt = new DemoTask();
-        dt.execute();
-    }
-
-    class DemoTask extends AsyncTask<String,Void,InputStream>
-    {
-
-        private ProgressDialog progressDialog;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = new ProgressDialog(MainActivity.this);
-            progressDialog.setTitle("Please wait..");
-            progressDialog.setMessage("application is fetching data..");
-           // progressDialog.setCancelable(false);
-            progressDialog.show();
-        }
-
-        @Override
-        protected InputStream doInBackground(String... params) {
-
-           // String url = params[0];
-
-            URL url = null;
-            try {
-                url = new URL(strURL);
-                Log.d(TAG, "url created");
-
-                URLConnection connection = url.openConnection();
-                Log.d(TAG, "url opened");
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-    }
-
-
-
-    public void searchRestaurant(View v)
-    {
         String url="http://tour-pedia.org/api/getPlaces?category=restaurant";
 
         DownloadTask task= new DownloadTask();
@@ -139,49 +82,53 @@ public class MainActivity extends AppCompatActivity  {
        // intent.putParcelableArrayListExtra("rest_list", (ArrayList<? extends Parcelable>) listRestaurants);
         intent.putExtra("details",details);
         startActivity(intent);
+
     }
 
-    class DownloadTask extends AsyncTask<String, Void, String> {
+    class DownloadTask extends AsyncTask<String, Void, String>
+    {
+
+
 
 
         @Override
         protected String doInBackground(String... params) {
 
-            String url = params[0];
+            String url=params[0];
 
-            Log.e("Location---->", "Inside doInbackground   URL --> " + url);
-            requestQueue = Volley.newRequestQueue(MainActivity.this);
+            Log.e("Location---->","Inside doInbackground   URL --> "+ url);
+            requestQueue= Volley.newRequestQueue(MainActivity.this);
 
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url,
+            JsonObjectRequest request= new JsonObjectRequest(Request.Method.GET, url,
 
                     new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject jsonObject) {
+                @Override
+                public void onResponse(JSONObject jsonObject) {
 
-                            try {
+                    try {
 
-                                JSONArray jsonArray = jsonObject.getJSONArray("restaurants");
-                                Log.e("JSON ARRAY----> ", jsonArray + "");
-                                // jsonData= jsonArray+"";
+                        JSONArray jsonArray= jsonObject.getJSONArray("restaurants");
+                        Log.e("JSON ARRAY----> ",jsonArray+"");
+                       // jsonData= jsonArray+"";
 
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                                    String name = jsonObject1.getString("name");
-                                    String location1 = jsonObject1.getString("location");
-                                    if (location1 == location) {
-                                        Restaurant r = new Restaurant(name, location);
-                                        listRestaurants.add(r);
+                        for (int i=0 ; i<jsonArray.length();i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            String name=jsonObject1.getString("name");
+                            String location1=jsonObject1.getString("location");
+                            if(location1==location) {
+                                Restaurant r = new Restaurant(name, location);
+                                listRestaurants.add(r);
 
-                                        Log.e("Restaurant Object----> ", r.toString());
-                                    }
-                                }
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                                Log.e("Restaurant Object----> ", r.toString());
                             }
-
                         }
-                    }, new Response.ErrorListener() {
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     volleyError.printStackTrace();
@@ -197,13 +144,16 @@ public class MainActivity extends AppCompatActivity  {
             return "done";
         }
 
-        @Override
+       /* @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            for (int i = 0; i < listRestaurants.size(); i++) {
-                listRestaurants.get(i);
+            for (int i=0; i<listRestaurants.size();i++)
+            {
+                 listRestaurants.get(i);
             }
-        }
+        }*/
     }
+
+
 }
