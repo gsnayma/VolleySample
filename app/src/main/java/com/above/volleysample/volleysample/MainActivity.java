@@ -1,5 +1,6 @@
 package com.above.volleysample.volleysample;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Parcelable;
@@ -15,20 +16,21 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+
+
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity  {
@@ -36,11 +38,11 @@ public class MainActivity extends AppCompatActivity  {
     private Spinner spinner;
     private String[] listOfLocations = {"Amsterdam","Barcelona","Berlin","Dubay","London","Paris","Rome","Tuscany"};
     String location="";
-    ArrayList<Restaurant> listRestaurants= new ArrayList<>();
-   // String jsonData;
+    ArrayList<Parcelable> listRestaurants= new ArrayList<>();
+    StringBuilder sb;
+    String details;
 
 
-    RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +60,8 @@ public class MainActivity extends AppCompatActivity  {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    location = spinner.getSelectedItem()+"";
-                    Log.e("Location selected--> ",location);
+                location = spinner.getSelectedItem() + "";
+                Log.e("Location selected--> ", location);
 
             }
 
@@ -72,80 +74,100 @@ public class MainActivity extends AppCompatActivity  {
 
     public void searchRestaurants(View v)
     {
-        String url="http://tour-pedia.org/api/getPlaces?category=restaurant";
+        String url="http://tour-pedia.org/api/getPlaces?category=restaurant&location="+location+"&name=La+Dolce+Vita";
 
         DownloadTask task= new DownloadTask();
         task.execute(url);
 
+/*
         Intent intent = new Intent(MainActivity.this,SearchedRestaurantListActivity.class);
-       // intent.putParcelableArrayListExtra("rest_list", (ArrayList<? extends Parcelable>) listRestaurants);
-       // intent.putExtra("details",details);
+        intent.putParcelableArrayListExtra("rest_list", listRestaurants);
+        // intent.putExtra("details",details);
         startActivity(intent);
-
+        */
     }
 
     class DownloadTask extends AsyncTask<String, Void, String>
     {
 
+        ProgressDialog progressDialog;
 
-
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog=new ProgressDialog(MainActivity.this);
+            progressDialog.setTitle("Please wait");
+            progressDialog.setMessage("Loading data");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
 
         @Override
         protected String doInBackground(String... params) {
 
-            String url=params[0];
+            //String url=params[0];
 
-            Log.e("Location---->","Inside doInbackground   URL --> "+ url);
-            requestQueue= Volley.newRequestQueue(MainActivity.this);
+            URL url = null;
 
-            JsonObjectRequest request= new JsonObjectRequest(Request.Method.GET, url,
 
-                    new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject jsonObject) {
+            try {
 
-                    try {
+                url = new URL(params[0]);
 
-                        JSONArray jsonArray= jsonObject.getJSONArray("restaurants");
-                        Log.e("JSON ARRAY----> ",jsonArray+"");
-                       // jsonData= jsonArray+"";
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
-                        for (int i=0 ; i<jsonArray.length();i++) {
-                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                            String name=jsonObject1.getString("name");
-                            String location1=jsonObject1.getString("location");
-                            String details=jsonObject1.getString("details");
-                            if(location1==location) {
-                                Restaurant r = new Restaurant(name, location,details);
-                                listRestaurants.add(r);
+                InputStream in = urlConnection.getInputStream();
 
-                                Log.e("Restaurant Object----> ", r.toString());
-                            }
-                        }
+                InputStreamReader isw = new InputStreamReader(in);
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
+                int data = isw.read();
+                sb = new StringBuilder();
+                while (data != -1) {
+                    char current = (char) data;
+                    data = isw.read();
+                    sb.append(current);
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-                    volleyError.printStackTrace();
-                }
-            });
 
 
-            requestQueue.add(request);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-            return "done";
+            return sb.toString() ;
+
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-        }
-    }
 
+            progressDialog.cancel();
+
+            String details;
+            Log.e("JSON Data------> ", s);
+            try {
+                JSONArray jsonArray= new JSONArray(s);
+                for (int i=0; i< jsonArray.length();i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    String name= jsonObject.getString("name");
+                    details= jsonObject.getString("details");
+                    listRestaurants.add(new Restaurant(name,location,details));
+                    Log.e("Name and Location: ", name+"      "+location+"    "+details);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            Intent intent = new Intent(MainActivity.this,SearchedRestaurantListActivity.class);
+            intent.putParcelableArrayListExtra("rest_list", listRestaurants);
+            startActivity(intent);
+
+        }
+
+
+        
+    }
 
 }
