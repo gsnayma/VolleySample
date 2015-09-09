@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
         <TextView
+            android:text="Title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textSize="20sp"
             android:id="@+id/textViewItemName"
             android:layout_margin="10sp"/>
+    <TextView
+        android:text="location"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:id="@+id/textViewItemLocation"
+        android:layout_margin="10sp"/>
 
 
 </LinearLayout>
