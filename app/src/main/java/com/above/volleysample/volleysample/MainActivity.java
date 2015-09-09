@@ -159,7 +159,6 @@ public class MainActivity extends AppCompatActivity  {
                 e.printStackTrace();
             }
 
-
             Intent intent = new Intent(MainActivity.this,SearchedRestaurantListActivity.class);
             intent.putParcelableArrayListExtra("rest_list", listRestaurants);
             startActivity(intent);
