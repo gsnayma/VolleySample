@@ -1,6 +1,10 @@
 package com.above.volleysample.volleysample;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Parcelable;
@@ -37,13 +41,27 @@ public class SearchedRestaurantListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
-        Log.e("oncreate", "oncrea");
         setContentView(R.layout.activity_searched_restaurant_list);
+
         // get data from intent
         Intent intent = getIntent();
         list =  intent.getParcelableArrayListExtra("rest_list");
+        if (list.size()==0)
+        {
+            new AlertDialog.Builder(SearchedRestaurantListActivity.this) .setTitle("Search Result") .setMessage("Restaurants not found") .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
+            { public void onClick(DialogInterface dialog, int which)
+                {
+                    finish();
+                 } }) .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener()
+                  { public void onClick(DialogInterface dialog, int which)
+                 {
+                     finish();
+                 }
+                  }) .setIcon(android.R.drawable.ic_dialog_alert) .show();
+
+
+
+        }
         Log.e("String JSON----> ",list+"");
 
 
@@ -67,48 +85,33 @@ public class SearchedRestaurantListActivity extends AppCompatActivity {
             }
         });
         //list.clear();
-restaurentAdapter.notifyDataSetChanged();
+        restaurentAdapter.notifyDataSetChanged();
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-restaurentAdapter.notifyDataSetChanged();
-
-        
-
-
-        // list.add(new Restaurant("Park Inn", "Bangalore"));
-        //  list.add(new Restaurant("Sayaji", "Indore"));
-
-        
-
-
+    restaurentAdapter.notifyDataSetChanged();
 
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
 
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-     //   list.clear();
-    }
 
     class GetDetailsTask extends AsyncTask<String,Void,String>
     {
+
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog=new ProgressDialog(SearchedRestaurantListActivity.this);
+            progressDialog.setTitle("Please wait");
+            progressDialog.setMessage("Loading data");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
 
         @Override
         protected String doInBackground(String... params) {
@@ -143,7 +146,7 @@ restaurentAdapter.notifyDataSetChanged();
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
+            progressDialog.cancel();
             // parse JSON
             try {
                 JSONObject jsonObject= new JSONObject(s);
